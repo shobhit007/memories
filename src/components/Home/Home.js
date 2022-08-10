@@ -11,14 +11,8 @@ const Home = () => {
   const [image, setImage] = useState(null);
   const [toggleModal, setToggleModal] = useState(false);
 
-  const {
-    state,
-    logout,
-    createNewPost,
-    getAllPosts,
-    likeANewPost,
-    disLiikePost,
-  } = Context();
+  const { state, logout, createNewPost, likeANewPost, disLiikePost } =
+    Context();
   const { user, posts } = state;
 
   // const getBase64Url = (file) => {
