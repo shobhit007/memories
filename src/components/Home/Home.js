@@ -32,7 +32,7 @@ const Home = () => {
         const filteredPost = post.liked.filter((id) => user.uid === id);
         if (filteredPost.length) setLiked(true);
       }
-    }, []);
+    }, [post]);
 
     const likeOrDislikeAPost = () => {
       if (liked) {
@@ -45,7 +45,7 @@ const Home = () => {
     return (
       <div className="memory__home-card_container_card">
         <div className="card_image">
-          <img src={post.imageUrl} />
+          <img src={post.imageUrl} alt="post_image" />
         </div>
         <div className="card_content">
           <div className="card_content-title">

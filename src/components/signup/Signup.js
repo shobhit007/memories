@@ -15,7 +15,7 @@ const Signup = () => {
       navigate("/");
       return;
     }
-  }, []);
+  }, [user, navigate]);
 
   return (
     <div className="memory__login-container">
