@@ -8,7 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { state, loginWithEmailAndPassword } = Context();
+  const { state, loginWithEmailAndPassword, loginWithGoogle } = Context();
   const { user } = state;
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const Login = () => {
           Login
         </button>
 
-        <div className="google_button">
+        <div className="google_button" onClick={loginWithGoogle}>
           <FcGoogle size={24} />
           <p>Login with Google</p>
         </div>

@@ -65,6 +65,11 @@ export const Provider = ({ children }) => {
       .catch((err) => console.log(err));
   };
 
+  const loginWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithRedirect(provider);
+  };
+
   async function createNewPost(title, description, uid, image) {
     const storageRef = storage.ref("images");
     const ref = storageRef.child(`${uid}/${image.name}`);
@@ -134,6 +139,7 @@ export const Provider = ({ children }) => {
         getAllPosts,
         likeANewPost,
         disLiikePost,
+        loginWithGoogle,
       }}
     >
       {!loading && children}
