@@ -45,7 +45,7 @@ const Home = () => {
     return (
       <div className="memory__home-card_container_card">
         <div className="card_image">
-          <img src={post.imageUrl} alt="image" />
+          <img src={post.imageUrl} />
         </div>
         <div className="card_content">
           <div className="card_content-title">
