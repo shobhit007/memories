@@ -39,7 +39,7 @@ export const Provider = ({ children }) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [navigate]);
 
   const loginWithEmailAndPassword = async (email, password) => {
     await auth
