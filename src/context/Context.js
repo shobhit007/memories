@@ -34,6 +34,7 @@ export const Provider = ({ children }) => {
       }
 
       dispatch({ type: "user", payload: user });
+      getAllPosts();
       setLoading(false);
     });
 

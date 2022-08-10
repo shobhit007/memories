@@ -30,10 +30,6 @@ const Home = () => {
   //   });
   // };
 
-  useEffect(() => {
-    getAllPosts();
-  }, []);
-
   const Card = ({ post, postId }) => {
     const [liked, setLiked] = useState(false);
 
