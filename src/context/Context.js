@@ -11,7 +11,7 @@ const reducer = (state, action) => {
     case "user":
       return { ...state, user: action.payload };
     case "posts":
-      return { ...state, posts: action.payload };
+      return { ...state, posts: [...action.payload] };
     case "logout":
       return { user: null, posts: null };
     default:
@@ -20,7 +20,7 @@ const reducer = (state, action) => {
 };
 
 export const Provider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, { user: null, posts: null });
+  const [state, dispatch] = useReducer(reducer, { user: null, posts: [] });
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -30,7 +30,6 @@ export const Provider = ({ children }) => {
       if (!user) {
         dispatch({ type: "logout" });
         setLoading(false);
-        navigate("/login");
       }
 
       dispatch({ type: "user", payload: user });
@@ -76,7 +75,7 @@ export const Provider = ({ children }) => {
     const metadata = {
       contentType: image.type,
     };
-    const uploadTask = ref.put(image.file, metadata);
+    const uploadTask = ref.put(image, metadata);
     const imageRef = (await uploadTask).ref.getDownloadURL();
 
     imageRef
@@ -84,7 +83,7 @@ export const Provider = ({ children }) => {
         await db
           .collection("memories")
           .add({ title, description, uid, imageUrl })
-          .then(() => console.log("post uploaded"))
+          .then(() => navigate("/", { replace: true }))
           .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));

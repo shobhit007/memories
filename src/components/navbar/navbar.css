@@ -1,0 +1,38 @@
+.bottom__nav {
+  width: 90%;
+  max-width: 380px;
+  background-color: rgba(255, 255, 255, 0.4);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 0.2em 1em;
+  border-radius: 100px;
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 2em;
+
+  backdrop-filter: blur(10px);
+  z-index: 99;
+}
+
+.nav__add-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--clr-white);
+  color: var(--clr-primary);
+  padding: 1em;
+  border-radius: 50%;
+}
+
+.default-link {
+  color: var(--clr-primary);
+}
+
+.active-link {
+  color: var(--clr-white);
+}

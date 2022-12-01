@@ -4,6 +4,30 @@
   margin: 0;
 }
 
+:root {
+  --clr-primary: #1d1e1e;
+  --clr-btn: rgb(236, 105, 105);
+  --clr-input: rgb(207, 202, 202);
+  --clr-white: #ffffff;
+}
+
 body {
-  background-color: #eee;
+  background-color: var(--clr-primary);
+  font-size: 1rem;
+  font-family: "Outfit";
+}
+
+img {
+  max-width: 100%;
+}
+
+input {
+  display: block;
+}
+
+.container {
+  width: 94%;
+  max-width: 420px;
+
+  margin: 0 auto;
 }

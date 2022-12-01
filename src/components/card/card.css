@@ -1,0 +1,31 @@
+.card {
+  width: 100%;
+
+  margin: 1em 0;
+}
+
+.card__image {
+  border-radius: 0.5em;
+}
+
+.card__content {
+  display: flex;
+
+  margin: 0.25em;
+  color: white;
+}
+
+.card__content-thumbnail {
+  width: 2.75em;
+  height: 2.75em;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.card__content-info {
+  margin-left: 0.75em;
+}
+
+.card__title {
+  font-size: 1.1rem;
+}

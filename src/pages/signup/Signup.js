@@ -18,29 +18,38 @@ const Signup = () => {
   }, [user, navigate]);
 
   return (
-    <div className="memory__login-container">
-      <div className="memory__login-container_card">
-        <h1>Welcome to, Memories</h1>
+    <div className="memory__signup-container">
+      <div className="memory__signup-container__card">
+        <h1 className="heading">
+          Welcome to, <br /> Memories
+        </h1>
         <input
           type={"email"}
           placeholder="Email"
           value={email}
+          className="input"
           onChange={(ev) => setEmail(ev.target.value)}
         />
         <input
           type={"password"}
           placeholder="Password"
           value={password}
+          className="input"
           onChange={(ev) => setPassword(ev.target.value)}
         />
-        <button type="button" onClick={() => createUser(email, password)}>
+        <button
+          type="button"
+          className="btn__signup"
+          onClick={() => createUser(email, password)}
+        >
           Sign up
         </button>
-        <div className="signup_link" onClick={() => navigate("/login")}>
-          <p>
-            Already have an account? <span>Log in</span>
-          </p>
-        </div>
+        <p className="nav__link">
+          Already have an account?{" "}
+          <strong className="navigate__link" onClick={() => navigate("/login")}>
+            Login
+          </strong>
+        </p>
       </div>
     </div>
   );

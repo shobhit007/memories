@@ -1,0 +1,36 @@
+.post {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+.post__top-bar {
+  padding: 1em 0;
+  color: var(--clr-white);
+}
+
+.file {
+  padding: 0.5em 1em;
+  color: var(--clr-primary);
+}
+
+.btn__publish {
+  width: 90%;
+  max-width: 420px;
+  padding: 1em;
+  border: none;
+  background-color: var(--clr-white);
+  color: var(--clr-primary);
+  font-weight: 700;
+  border-radius: 4px;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2em;
+  margin: 0 auto;
+}
+
+.btn__publish:focus {
+  opacity: 0.7;
+}
