@@ -1,29 +1,32 @@
 import "./home.css";
-import React, { useState } from "react";
-import { Context } from "../../context/Context";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import Card from "../../components/card/Card";
+import { db } from "../../config/firebaseConfig";
 
 const Home = () => {
-  const { state, logout, createNewPost, likeANewPost, disLiikePost } =
-    Context();
-  const { user, posts } = state;
+  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
 
-  // const getBase64Url = (file) => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => resolve(reader.result);
-  //     reader.onerror = () => reject(reader.error);
-  //   });
-  // };
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("memories")
+      .onSnapshot((querySnapshot) => {
+        setPosts(querySnapshot.docs);
+        setLoading(false);
+      });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) return null;
 
   return (
     <>
       <Navbar />
       <div className="container">
-        {posts.map((post) => (
-          <Card key={post.id} post={post.data()} postId={post.id} />
+        {posts?.map((post) => (
+          <Card key={post.id} post={post.data()} />
         ))}
       </div>
     </>

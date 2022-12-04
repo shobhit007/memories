@@ -5,6 +5,7 @@ import { Context } from "../../context/Context";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { createUser, state } = Context();
@@ -24,6 +25,13 @@ const Signup = () => {
           Welcome to, <br /> Memories
         </h1>
         <input
+          type={"text"}
+          placeholder="Name"
+          value={name}
+          className="input"
+          onChange={(ev) => setName(ev.target.value)}
+        />
+        <input
           type={"email"}
           placeholder="Email"
           value={email}
@@ -40,7 +48,7 @@ const Signup = () => {
         <button
           type="button"
           className="btn__signup"
-          onClick={() => createUser(email, password)}
+          onClick={() => createUser(email, password, name)}
         >
           Sign up
         </button>

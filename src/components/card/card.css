@@ -26,6 +26,11 @@
   margin-left: 0.75em;
 }
 
-.card__title {
+.card__user-name {
   font-size: 1.1rem;
+}
+
+.card__date {
+  font-size: 0.75rem;
+  color: gray;
 }

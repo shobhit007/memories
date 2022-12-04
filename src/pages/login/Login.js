@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
 import "./login.css";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
+import google from "../../images/google.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ const Login = () => {
         </button>
 
         <div className="google__button" onClick={loginWithGoogle}>
+          <img src={google} alt="google" className="google__button-img" />
           <p>Login with Google</p>
         </div>
 

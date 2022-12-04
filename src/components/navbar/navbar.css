@@ -16,7 +16,7 @@
   bottom: 2em;
 
   backdrop-filter: blur(10px);
-  z-index: 99;
+  z-index: 9;
 }
 
 .nav__add-icon {

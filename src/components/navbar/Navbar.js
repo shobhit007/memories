@@ -10,6 +10,8 @@ function Navbar() {
     state: { user },
   } = Context();
 
+  const userData = user?.data();
+
   return (
     <div className="bottom__nav">
       <Link
@@ -20,16 +22,18 @@ function Navbar() {
       </Link>
 
       <Link
-        to={user ? `/${user.uid}/new-post` : "/login"}
+        to={userData ? `/${userData?.uid}/new-post` : "/login"}
         className="nav__add-icon"
       >
         <AddRounded />
       </Link>
 
       <Link
-        to={user ? `/${user.uid}/account` : "/login"}
+        to={userData ? `/${userData?.uid}/account` : "/login"}
         className={
-          pathname === `/${user.uid}/account` ? "active-link" : "default-link"
+          pathname === `/${userData?.uid}/account`
+            ? "active-link"
+            : "default-link"
         }
       >
         <PersonRounded />

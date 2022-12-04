@@ -16,14 +16,17 @@ function Post() {
 
   const handleNewPost = () => {
     if (image && title && description) {
-      createNewPost(title, description, user.uid, image);
+      createNewPost({ title, description, userId: user.data().uid, image });
     }
   };
 
   return (
     <div className="post">
       <div className="post__top-bar">
-        <KeyboardBackspaceRounded onClick={() => navigate(-1)} />
+        <KeyboardBackspaceRounded
+          onClick={() => navigate(-1)}
+          className="post__top-bar__back-button"
+        />
       </div>
       <input
         type={"text"}

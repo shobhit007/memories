@@ -13,7 +13,7 @@ const reducer = (state, action) => {
     case "posts":
       return { ...state, posts: [...action.payload] };
     case "logout":
-      return { user: null, posts: null };
+      return { user: null, posts: [] };
     default:
       return state;
   }
@@ -27,13 +27,14 @@ export const Provider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (!user) {
-        dispatch({ type: "logout" });
-        setLoading(false);
+      if (user) {
+        db.collection("users")
+          .where("uid", "==", user.uid)
+          .onSnapshot((querySnapshot) => {
+            dispatch({ type: "user", payload: querySnapshot.docs[0] });
+          });
       }
 
-      dispatch({ type: "user", payload: user });
-      getAllPosts();
       setLoading(false);
     });
 
@@ -47,11 +48,19 @@ export const Provider = ({ children }) => {
       .catch((err) => console.log(err));
   };
 
-  const createUser = async (email, password) => {
-    await auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => navigate("/"))
-      .catch((err) => console.log(err));
+  const createUser = async (email, password, name) => {
+    try {
+      const res = await auth.createUserWithEmailAndPassword(email, password);
+
+      if (res.user) {
+        await db
+          .collection("users")
+          .add({ name, email: res.user.email, uid: res.user.uid })
+          .then(() => navigate("/"));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const logout = () => {
@@ -64,14 +73,31 @@ export const Provider = ({ children }) => {
       .catch((err) => console.log(err));
   };
 
-  const loginWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithRedirect(provider);
+  const loginWithGoogle = async () => {
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider).then(async (result) => {
+        const user = result.user;
+        if (result.additionalUserInfo.isNewUser) {
+          await db
+            .collection("users")
+            .add({
+              name: user.displayName,
+              email: user.email,
+              uid: user.uid,
+              photoURL: user.photoURL,
+            })
+            .then(() => console.log("user logged in with google"));
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  async function createNewPost(title, description, uid, image) {
-    const storageRef = storage.ref("images");
-    const ref = storageRef.child(`${uid}/${image.name}`);
+  async function createNewPost({ title, description, userId, image }) {
+    const storageRef = storage.ref("memories");
+    const ref = storageRef.child(`${userId}/${image.name}`);
     const metadata = {
       contentType: image.type,
     };
@@ -82,12 +108,38 @@ export const Provider = ({ children }) => {
       .then(async (imageUrl) => {
         await db
           .collection("memories")
-          .add({ title, description, uid, imageUrl })
+          .add({
+            title,
+            description,
+            userId,
+            imageUrl,
+            createdAt: firebase.firestore.Timestamp.now(),
+          })
           .then(() => navigate("/", { replace: true }))
           .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   }
+
+  const updateProfile = async ({ image, name, uid }) => {
+    try {
+      const storageRef = storage.ref("profileImages");
+      const ref = storageRef.child(`/${uid}/${image.name}`);
+      const metadata = {
+        contentType: image.type,
+      };
+      const uploadTask = ref.put(image, metadata);
+      const imageRef = (await uploadTask).ref.getDownloadURL();
+
+      imageRef.then(async (imageUrl) => {
+        await db
+          .collection("users")
+          .doc(state.user?.id)
+          .update({ name, photoURL: imageUrl })
+          .then(() => console.log("user updated!"));
+      });
+    } catch (error) {}
+  };
 
   function getAllPosts() {
     try {
@@ -139,6 +191,7 @@ export const Provider = ({ children }) => {
         likeANewPost,
         disLiikePost,
         loginWithGoogle,
+        updateProfile,
       }}
     >
       {!loading && children}

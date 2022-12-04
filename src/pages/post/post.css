@@ -9,6 +9,10 @@
   color: var(--clr-white);
 }
 
+.post__top-bar__back-button {
+  cursor: pointer;
+}
+
 .file {
   padding: 0.5em 1em;
   color: var(--clr-primary);
@@ -29,8 +33,10 @@
   right: 0;
   bottom: 2em;
   margin: 0 auto;
+
+  cursor: pointer;
 }
 
-.btn__publish:focus {
+.btn__publish:hover {
   opacity: 0.7;
 }
